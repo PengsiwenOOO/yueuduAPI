@@ -1,3 +1,6 @@
 module.exports = {
-  secret: 'test'
+  secret: 'test',
+  unless: [
+   
+  ]
 }

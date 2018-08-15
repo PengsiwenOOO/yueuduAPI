@@ -8,6 +8,5 @@ router
   .get('/articles/:type_id/rand', article_controllers.get_articles_typeid_rand)
   .post('/article/:id/like', article_controllers.like_article)
   .delete('/article/:id/like', article_controllers.cancel_like_article)
-  // .post('/article/:id/collection', )
 
 module.exports = router

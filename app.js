@@ -29,11 +29,14 @@ app.use(async (ctx, next) => {
 })
 
 app.use(response_formatter)
+
 app.use(jwt({
   secret: jwt_config.secret
 }).unless({
-  path: [/^\/api\/./]
+  path: [/^\/api\/article\/.\/(?<!like)$/]
 }))
+
+
 // routes
 app.use(index.routes(), index.allowedMethods())
 // app.use(users.routes(), users.allowedMethods())

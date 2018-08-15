@@ -3,8 +3,13 @@ const query = require('./index')
 class TypeModel {
   constructor () {}
 
-  static type_select (values) {
-    const _sql = `SELECT 'id', 'type' FROM t_types WHERE id = ?`
+  static type_select () {
+    const _sql = `SELECT id, type FROM t_types`
+    return query(_sql)
+  }
+
+  static type_select_by_id (values) {
+    const _sql = `SELECT id, type FROM t_types WHERE id = ?`
     return query(_sql, values)
   }
 

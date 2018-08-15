@@ -29,6 +29,16 @@ const get_articles_rand = async (ctx) => {
   }
 }
 
+const get_articles_typeid_rand = async (ctx) => {
+  const {type_id} = ctx.params
+  try {
+    const articles = await article_model.articles_select_by_type_rand(type_id)
+    ctx.body = articles
+  } catch (error) {
+    ctx.throw(400, error)
+  }
+}
+
 const get_article = async (ctx) => {
   const {id} = ctx.params
   try {
@@ -82,6 +92,7 @@ const cancel_collection_article = async (ctx) => {
 module.exports = {
   get_articles_limit,
   get_articles_rand,
+  get_articles_typeid_rand,
   get_articles_top10,
   get_article,
   like_article,

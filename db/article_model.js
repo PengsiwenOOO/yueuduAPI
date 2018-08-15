@@ -4,7 +4,7 @@ class ArticleModel {
   constructor () {}
 
   static articles_select_limit_by_typeid (values) {
-    const _sql = `SELECT id, title, play_time, author, podcast, duration, img_url, content FROM t_articles WHERE type_id = ? ORDER BY id DESC LIMIT ?`
+    const _sql = `SELECT id, title, DATE_FORMAT(created_time, '%Y/%m/%d') as created_time, play_time, author, podcast, duration, img_url, content FROM t_articles WHERE type_id = ? ORDER BY id DESC LIMIT ?`
     return query(_sql, values)
   }
 
@@ -16,6 +16,10 @@ class ArticleModel {
   static articles_select_rand () {
     const _sql = `SELECT id, title, img_url FROM t_articles ORDER BY RAND() LIMIT 20`
     return query(_sql)
+  }
+  static articles_select_by_type_rand (values) {
+    const _sql = `SELECT id, title, author, podcast FROM t_articles WHERE type_id = ? ORDER BY RAND() LIMIT 5`
+    return query(_sql, values)
   }
 
   static articles_select_like_by_title () {
@@ -29,7 +33,7 @@ class ArticleModel {
   }
 
   static article_select_by_id (values) {
-    const _sql = `SELECT id, title, author, podcast, img_url, mp3_url, play_time, content, labels, duration, (SELECT count(id) FROM t_like WHERE t_like.article_id = t_articles.id) as like_count, (SELECT count(id) FROM t_collections WHERE t_collections.article_id = t_articles.id) as collection_count FROM t_articles WHERE id = ?`
+    const _sql = `SELECT id, title, author, podcast, img_url, mp3_url, play_time, content, labels, duration, (SELECT count(id) FROM t_like WHERE t_like.article_id = t_articles.id) as like_count, (SELECT count(id) FROM t_collections WHERE t_collections.article_id = t_articles.id) as collection_count, type_id FROM t_articles WHERE id = ?`
     return query(_sql, values)
   }
 

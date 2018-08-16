@@ -41,6 +41,7 @@ const get_articles_typeid_rand = async (ctx) => {
 
 const get_article = async (ctx) => {
   const {id} = ctx.params
+  console.log(ctx.state.user)
   try {
     const [article] = await article_model.article_select_by_id(id)
     ctx.body = article

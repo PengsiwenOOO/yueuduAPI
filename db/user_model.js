@@ -21,7 +21,7 @@ class UserModel {
   }
 
   static user_select_by_email (values) {
-    const _sql = `SELECT id FROM t_users WHERE email = ?`
+    const _sql = `SELECT ?? FROM t_users WHERE email = ?`
     return query(_sql, values)
   }
 

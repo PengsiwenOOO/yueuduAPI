@@ -33,7 +33,7 @@ app.use(response_formatter)
 app.use(jwt({
   secret: jwt_config.secret
 }).unless({
-  path: [/^\/api\/article\/.\/(?<!like)$/]
+  path: [/\/api\/user\//]
 }))
 
 

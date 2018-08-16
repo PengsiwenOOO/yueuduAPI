@@ -3,15 +3,20 @@ const jwt = require('jsonwebtoken')
 const jwt_config = require('../config/jwt_config')
 
 const login = async (ctx) => {
-  const {username, password} = ctx.params
-  console.log(await user_model.user_select_by_username([['username', 'password', 'nikiname', 'email'], username]))
+  const {email} = ctx.params
+  
+  const {password} = ctx.request.body
+  console.log(email, password)
   try {
-    let user = await user_model.user_select_by_username([['username', 'password', 'nikiname', 'email'], username])
+    let user = await user_model.user_select_by_email([['id', 'password', 'nikiname', 'email'], email])
+    // console.log(user.password)
     if (user.length) {
       user = user[0]
+      console.log(user.password)
       if (user.password === password) {
-        const token_user = {username: user.username, email: user.email, nikiname: user.nikiname}
+        const token_user = {email: user.email, nikiname: user.nikiname, id: user.id}
         // console.log(token_user)
+        
         const token = jwt.sign(token_user, jwt_config.secret, {expiresIn: '2h'})
         ctx.body = {
           user: token_user,

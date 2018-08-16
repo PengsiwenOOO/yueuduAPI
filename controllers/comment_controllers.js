@@ -4,7 +4,7 @@ const get_comments_limit = async (ctx) => {
   const {article_id, page} = ctx.params
   console.log(article_id, page)
   try {
-    const comments = await comment_model.comments_select_limit_by_articleid([1, [(page - 1) * 10, 10]])
+    const comments = await comment_model.comments_select_limit_by_articleid([article_id, [(page - 1) * 10, 10]])
     comments.length ? (ctx.body = comments) : ctx.throw(400, '暂无评论')
   } catch (error) {
     ctx.throw(400, error)
@@ -12,7 +12,9 @@ const get_comments_limit = async (ctx) => {
 }
 
 const add_comment = async (ctx) => {
-  const comment = {user_id, article_id, content} = ctx.request.body
+  const comment = {article_id, content} = ctx.request.body
+  const user_id = ctx.state.user.id
+  comment.user_id = user_id
   try {
     const result = await comment_model.comments_insert(comment)
     const id = result.insertId

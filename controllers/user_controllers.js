@@ -42,9 +42,9 @@ const get_user = async (ctx) => {
   const {id} = ctx.params
   try {
     const user = await user_model.user_select_by_id(id)
-    
+    ctx.body = user
   } catch (error) {
-    
+    ctx.throw(400, error.code)
   }
 }
 

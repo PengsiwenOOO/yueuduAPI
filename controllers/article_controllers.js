@@ -2,6 +2,7 @@ const article_model = require('../db/article_model')
 
 const get_articles_limit = async (ctx) => {
   const {type_id, page} = ctx.params
+  console.log(ctx.state)
   try {
     const articles = await article_model.articles_select_limit_by_typeid([type_id, [(page - 1) * 10, 10]])
     ctx.body = articles

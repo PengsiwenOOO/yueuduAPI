@@ -1,5 +1,6 @@
 const router = require('koa-router')()
 const article_controllers = require('../../controllers/article_controllers')
+const jwt_auth = require('../../middleware/jwt_auth')
 router
   .get('/articles/:type_id/page/:page', article_controllers.get_articles_limit)
   .get('/article/:id', article_controllers.get_article)

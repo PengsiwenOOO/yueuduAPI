@@ -1,5 +1,6 @@
 const router = require('koa-router')()
 const user_controllers = require('../../controllers/user_controllers')
+const jwt_auth = require('../../middleware/jwt_auth')
 
 router
   .post('/user/:email', user_controllers.login)

@@ -28,8 +28,8 @@ class ArticleModel {
   }
 
   static articles_select_count () {
-    const _sql = `SELECT count(id) FROM t_articles`
-    return query(_sql, values)
+    const _sql = `SELECT count(id) as count FROM t_articles`
+    return query(_sql)
   }
 
   static article_select_by_id (values) {

@@ -3,10 +3,8 @@ const jwt = require('jsonwebtoken')
 const jwt_config = require('../config/jwt_config')
 
 const login = async (ctx) => {
-  const {email} = ctx.params
   
-  const {password} = ctx.request.body
-  console.log(email, password)
+  const {email, password} = ctx.request.body
   try {
     let user = await user_model.user_select_by_email([['id', 'password', 'nikiname', 'email'], email])
     // console.log(user.password)

@@ -2,7 +2,6 @@ const comment_model = require('../db/comment_model')
 
 const get_comments_limit = async (ctx) => {
   const {article_id, page} = ctx.params
-  console.log(article_id, page)
   try {
     const comments = await comment_model.comments_select_limit_by_articleid([article_id, [(page - 1) * 10, 10]])
     comments.length ? (ctx.body = comments) : ctx.throw(400, '暂无评论')

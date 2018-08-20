@@ -2,10 +2,12 @@ const article_model = require('../db/article_model')
 
 const get_articles_limit = async (ctx) => {
   const {type_id, page} = ctx.params
-  console.log(ctx.state)
   try {
-    const articles = await article_model.articles_select_limit_by_typeid([type_id, [(page - 1) * 10, 10]])
-    ctx.body = articles
+    const result = await Promise.all([article_model.articles_select_limit_by_typeid([type_id, [(page - 1) * 10, 10]]), article_model.articles_select_count(type_id)])
+    const [articles, [{count}]] = result
+    ctx.body = {
+      articles, count, page: +page
+    }
   } catch (error) {
     ctx.throw(400, error)
   }
@@ -42,7 +44,6 @@ const get_articles_typeid_rand = async (ctx) => {
 
 const get_article = async (ctx) => {
   const {id} = ctx.params
-  console.log(ctx.state.user)
   try {
     const [article] = await article_model.article_select_by_id(id)
     ctx.body = article

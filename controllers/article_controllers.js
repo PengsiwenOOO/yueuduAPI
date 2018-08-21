@@ -3,8 +3,9 @@ const article_model = require('../db/article_model')
 const get_articles_limit = async (ctx) => {
   const {type_id, page} = ctx.params
   try {
-    const result = await Promise.all([article_model.articles_select_limit_by_typeid([type_id, [(page - 1) * 10, 10]]), article_model.articles_select_count(type_id)])
-    const [articles, [{count}]] = result
+    const articles = await article_model.articles_select_limit_by_typeid([type_id, [(page - 1) * 10, 10]])
+    const [{count}] = await article_model.articles_select_count(type_id)
+
     ctx.body = {
       articles, count, page: +page
     }

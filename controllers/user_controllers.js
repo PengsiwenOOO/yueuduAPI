@@ -5,9 +5,9 @@ const jwt_config = require('../config/jwt_config')
 const login = async (ctx) => {
   
   const {email, password} = ctx.request.body
+  console.log(email, password)
   try {
     let user = await user_model.user_select_by_email([['id', 'password', 'nikiname', 'email'], email])
-    // console.log(user.password)
     if (user.length) {
       user = user[0]
       console.log(user.password)

@@ -32,5 +32,6 @@ npm-debug.log
 # for macos
 .DS_Store
 
-yarn.lock
 config/db.js
+
+yarn.lock

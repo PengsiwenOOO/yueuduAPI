@@ -10,7 +10,6 @@ module.exports = async (ctx, next) => {
       ctx.state.user = res
       await next()
     } catch (error) {
-      console.log('错误')
       ctx.throw(401, error)
     }
   }else {

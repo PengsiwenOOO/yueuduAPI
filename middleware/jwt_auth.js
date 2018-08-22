@@ -7,7 +7,6 @@ module.exports = async (ctx, next) => {
   if (token) {
     try {
       const res = await token_verify(token.split(' ')[1], jwt_config.secret)
-      console.log(res)
       ctx.state.user = res
       await next()
     } catch (error) {

@@ -1,9 +1,6 @@
 module.exports  = async (ctx, next) => {
   try {
     await next()
-    if (ctx.body) {
-      
-    }
     ctx.body ? ctx.body = {
       res_code: 200,
       res_msg: '请求成功',

@@ -55,9 +55,14 @@ const get_article = async (ctx) => {
 
 // token问题
 const like_article = async (ctx) => {
-  const {article_id} = ctx.params
+  const article_id = ctx.params.id
+  // 获取token
+  // const token = ctx.header.authorization.split(' ')[1]
+
+  console.log(ctx.state.user)
   try {
-    await article_model.article_insert_like({article_id})
+    await article_model.article_insert_like({article_id, user_id: ctx.state.user.id})
+    ctx.body = '成功'
   } catch (error) {
     ctx.throw(400, error)
   }

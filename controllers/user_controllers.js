@@ -10,7 +10,6 @@ const login = async (ctx) => {
     let user = await user_model.user_select_by_email([['id', 'password', 'nikiname', 'email'], email])
     if (user.length) {
       user = user[0]
-      console.log(user.password)
       if (user.password === password) {
         const token_user = {email: user.email, nikiname: user.nikiname, id: user.id}
         // console.log(token_user)

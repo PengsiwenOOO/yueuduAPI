@@ -61,6 +61,10 @@ class ArticleModel {
     const _sql = `DELETE FROM t_like WHERE articlet_id = ? AND user_id = ?`
     return query(_sql, values)
   }
+  static article_isLike (values) {
+    const _sql = `SELECT user_id FROM t_like WHERE article_id = ? AND user_id = ?`
+    return query(_sql, values)
+  }
 }
 
 module.exports = ArticleModel

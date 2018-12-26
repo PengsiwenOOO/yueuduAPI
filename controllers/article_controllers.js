@@ -1,11 +1,9 @@
 const article_model = require('../db/article_model')
-
 const get_articles_limit = async (ctx) => {
   const {type_id, page} = ctx.params
   try {
     const articles = await article_model.articles_select_limit_by_typeid([type_id, [(page - 1) * 10, 10]])
     const [{count}] = await article_model.articles_select_count(type_id)
-
     ctx.body = {
       articles, count, page: +page
     }
@@ -47,6 +45,17 @@ const get_article = async (ctx) => {
   const {id} = ctx.params
   try {
     const [article] = await article_model.article_select_by_id(id)
+    // console.log(ctx.state.user)
+    if (ctx.state.user) {
+      const user_id = ctx.state.user ? ctx.state.user.id : null
+      const res = await article_model.article_isLike([id, user_id])
+      if (res[0]) {
+        article.isLiked = true
+      }
+    } else {
+      article.isLiked = false
+    }
+
     ctx.body = article
   } catch (error) {
     ctx.throw(400, error)

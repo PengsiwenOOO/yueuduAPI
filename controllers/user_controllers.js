@@ -43,8 +43,12 @@ const get_user = async (ctx) => {
   }
 }
 
+const auth_token = async (ctx) => {
+  
+}
 module.exports = {
   login,
   register,
-  get_user
+  get_user,
+  auth_token
 }

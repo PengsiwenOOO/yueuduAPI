@@ -11,9 +11,7 @@ const login = async (ctx) => {
     if (user.length) {
       user = user[0]
       if (user.password === password) {
-        const token_user = {email: user.email, nikiname: user.nikiname, id: user.id}
-        // console.log(token_user)
-        
+        const token_user = {email: user.email, nikiname: user.nikiname, id: user.id}        
         const token = jwt.sign(token_user, jwt_config.secret, {expiresIn: '2h'})
         ctx.body = {
           user: token_user,

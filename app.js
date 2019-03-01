@@ -6,18 +6,35 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 // const jwt = require('koa-jwt2')
 const response_formatter = require('./middleware/response_formatter')
-
+const cors = require('koa2-cors')
 
 const index = require('./routes/index')
+const path = require('path')
+const static = require('koa-static')
 
 // error handler
 onerror(app)
-
+app.use(cors({
+  origin: function (ctx) {
+    return '*'; 
+  },
+  exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+  maxAge: 5,
+  credentials: true,
+  allowMethods: ['GET', 'POST', 'DELETE'],
+  allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}))
 // middlewares
+app.use(static(path.join(__dirname, './www')))
+
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']
 }))
+
+
 app.use(json())
+
+
 app.use(logger())
 // logger
 app.use(async (ctx, next) => {
@@ -44,5 +61,7 @@ app.use(index.routes(), index.allowedMethods())
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
+
+
 
 module.exports = app

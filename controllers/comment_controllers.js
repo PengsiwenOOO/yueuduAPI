@@ -27,7 +27,8 @@ const get_comments_limit = async (ctx) => {
 
 const add_comment = async (ctx) => {
   const comment = {article_id, content} = ctx.request.body
-  const user_id = ctx.state.user.id
+  // const user_id = ctx.state.user.id
+  const user_id = 1
   comment.user_id = user_id
   try {
     const result = await comment_model.comments_insert(comment)

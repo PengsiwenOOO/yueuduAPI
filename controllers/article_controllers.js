@@ -1,4 +1,5 @@
 const article_model = require('../db/article_model')
+const type_model = require('../db/type_model')
 const get_articles_limit = async (ctx) => {
   const {type_id, page} = ctx.params
   try {
@@ -16,7 +17,11 @@ const get_articles_top10 = async (ctx) => {
   const {type_id} = ctx.params
   try {
     const articles = await article_model.articles_select_top10(type_id)
-    ctx.body = articles
+    const [{type}] = await type_model.type_select_by_id(type_id)
+    ctx.body = {
+      articles,
+      type
+    }
   } catch (error) {
     ctx.throw(400, error)
   }

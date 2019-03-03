@@ -8,11 +8,10 @@ module.exports = async (ctx, next) => {
     try {
       const res = await token_verify(token.split(' ')[1], jwt_config.secret)
       ctx.state.user = res
-      await next()
     } catch (error) {
       // ctx.throw(401, 1)
-      await next()
     }
-  }
+  } 
   await next()
+
 }

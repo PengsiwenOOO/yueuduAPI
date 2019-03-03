@@ -46,7 +46,7 @@ const get_articles_typeid_rand = async (ctx) => {
   }
 }
 
-const get_article = async (ctx) => {
+const get_article = async (ctx, next) => {
   const {id} = ctx.params
   try {
     const [article] = await article_model.article_select_by_id(id)
@@ -60,7 +60,6 @@ const get_article = async (ctx) => {
     } else {
       article.isLiked = false
     }
-
     ctx.body = article
   } catch (error) {
     ctx.throw(400, error)

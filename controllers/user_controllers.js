@@ -5,7 +5,6 @@ const jwt_config = require('../config/jwt_config')
 const login = async (ctx) => {
   
   const {email, password} = ctx.request.body
-  console.log(email, password)
   try {
     let user = await user_model.user_select_by_email([['id', 'password', 'nikiname', 'email'], email])
     if (user.length) {
@@ -44,7 +43,7 @@ const get_user = async (ctx) => {
 }
 
 const auth_token = async (ctx) => {
-  
+  ctx.body = '已登录'
 }
 module.exports = {
   login,

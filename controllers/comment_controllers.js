@@ -7,8 +7,13 @@ const get_comments_limit = async (ctx) => {
   const token = ctx.header.authorization
   let user_id = 0
   if (token) {
-    const result = await token_verify(token.split(' ')[1], jwt_config.secret)
-    user_id = result.id
+    try {
+      const result = await token_verify(token.split(' ')[1], jwt_config.secret)
+      user_id = result.id
+    } catch (err) {
+      user_id = 0
+    }
+    
   }
   
   try {
@@ -27,8 +32,8 @@ const get_comments_limit = async (ctx) => {
 
 const add_comment = async (ctx) => {
   const comment = {article_id, content} = ctx.request.body
-  // const user_id = ctx.state.user.id
-  const user_id = 1
+  const user_id = ctx.state.user.id
+  // const user_id = 
   comment.user_id = user_id
   try {
     const result = await comment_model.comments_insert(comment)
